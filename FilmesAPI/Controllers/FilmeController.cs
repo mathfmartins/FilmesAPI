@@ -13,69 +13,55 @@ namespace FilmesAPI.Controllers
     public class FilmeController : ControllerBase
     {
        
-        private CinemaContext _context;
+        private IFilmeDao _filmeDao;
         private IMapper _mapper;
 
-        public FilmeController(CinemaContext context, IMapper mapper)
+        public FilmeController(IFilmeDao context, IMapper mapper)
         {
-            _context = context;
+            _filmeDao = context;
             _mapper = mapper;
         }
 
         [HttpPost]
         public IActionResult AdicionaFirme([FromBody] CreateFilmeDto filmeDto)
         {
-            var filme = _mapper.Map<Filme>(filmeDto);
-
-            _context.Filmes.Add(filme);
-            _context.SaveChanges();
+            Filme filme = _filmeDao.Create(filmeDto);
             return CreatedAtAction(nameof(GetFilmeById), new { id = filme.Id }, filme);
         }
 
         [HttpGet]   
         public IActionResult GetFilmes()
         {
-            return Ok(_context.Filmes);
+            return Ok(_filmeDao.Read());
         }
 
         [HttpGet("{id}")]
         public IActionResult GetFilmeById(int id)
         {
-            Filme filme = _context.Filmes.Where((filme) => filme.Id == id).FirstOrDefault();
-            if (filme != null)
-            {
-                var filmeDto = _mapper.Map<ReadFilmeDto>(filme);
-                return Ok(filmeDto);
-            }
+            ReadFilmeDto filmeDto = _filmeDao.GetFilmeById(id);
+            if (filmeDto == null)
+                return NotFound();
 
-            return NotFound();
+            return Ok(filmeDto);
         }   
 
         [HttpPut("{id}")]
         public IActionResult UpdateById(int id, [FromBody]  UpdateFilmeDto filmeDto)
         {
-            Filme filme = _context.Filmes.Where((filme) => filme.Id == id).FirstOrDefault();
-            if (filme != null)
-            {
-                _mapper.Map(filmeDto, filme); 
-                _context.SaveChanges();
-                return NoContent();
-            }
+            if (filmeDto == null)
+                return NotFound();
 
-            return NotFound();
+            _filmeDao.Update(id, filmeDto);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)
         {
-            Filme filme = _context.Filmes.Where((filme) => filme.Id == id).FirstOrDefault();
-            if (filme != null)
-            {
-                _context.Filmes.Remove(filme);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return NotFound();
+            if(!_filmeDao.Delete(id))
+                return NotFound();
+          
+            return NoContent();
         }
     }
 }
