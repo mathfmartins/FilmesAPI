@@ -3,14 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FilmesAPI.Data
 {
-    public class FilmeContext : DbContext
+    public class CinemaContext : DbContext
     {
   
-        public FilmeContext(DbContextOptions<FilmeContext> opts) : base(opts)
+        public CinemaContext(DbContextOptions<CinemaContext> opts) : base(opts)
         {
 
         }
 
         public DbSet<Filme> Filmes { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
     }
 }

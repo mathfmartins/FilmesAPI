@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FilmesAPI.Dto
+namespace FilmesAPI.Dto.FilmeDto
 {
     public class CreateFilmeDto
     {

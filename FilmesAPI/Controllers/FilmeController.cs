@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using FilmesAPI.Data;
 using FilmesAPI.Dto;
+using FilmesAPI.Dto.FilmeDto;
 using FilmesAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FilmesAPI.Controllers
 {
@@ -15,10 +13,10 @@ namespace FilmesAPI.Controllers
     public class FilmeController : ControllerBase
     {
        
-        private FilmeContext _context;
+        private CinemaContext _context;
         private IMapper _mapper;
 
-        public FilmeController(FilmeContext context, IMapper mapper)
+        public FilmeController(CinemaContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
