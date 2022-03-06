@@ -52,16 +52,21 @@ namespace FilmesAPI.Data
             return _mapper.Map<ReadFilmeDto>(filme);
         }
 
-        public IEnumerable<Filme> Read()
+        public IEnumerable<ReadFilmeDto> Read()
         {
-            return _context.Filmes;
+            var filmes = _mapper.Map < IEnumerable<ReadFilmeDto>>(_context.Filmes);
+            return filmes;
         }
 
-        public void Update(int id, UpdateFilmeDto filmeDto)
+        public bool Update(int id, UpdateFilmeDto filmeDto)
         {
             Filme filme = GetById(id);
+            if (filme == null)
+                return false;
+
             _mapper.Map(filmeDto, filme);
             _context.SaveChanges();
+            return true;
         }
     }
 }

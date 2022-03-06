@@ -8,9 +8,10 @@ namespace FilmesAPI.Dto.FilmeDto
 {
     public class CreateFilmeDto
     {
-        [Required(ErrorMessage = "Título deve ser informado.")]
+        [Required(ErrorMessage = "Título deve ser informado")]
         public string Titulo { get; set; }
-        [Required(ErrorMessage = "Diretor deve ser informado.")]
+
+        [Required(ErrorMessage = "Diretor deve ser informado")]
         public string Diretor { get; set; }
 
         [StringLength(30, ErrorMessage = "Genêro não pode passar de 30 caracteres")]

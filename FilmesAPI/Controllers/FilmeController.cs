@@ -48,7 +48,7 @@ namespace FilmesAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateById(int id, [FromBody]  UpdateFilmeDto filmeDto)
         {
-            if (filmeDto == null)
+            if (!_filmeDao.Update(id, filmeDto))
                 return NotFound();
 
             _filmeDao.Update(id, filmeDto);

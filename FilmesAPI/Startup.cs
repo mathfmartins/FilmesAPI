@@ -30,6 +30,7 @@ namespace FilmesAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IFilmeDao, FilmeDao>();
+            services.AddTransient<IEnderecoDao, EnderecoDao>();
             services.AddDbContext<CinemaContext>(opts => opts.UseMySQL(Configuration.GetConnectionString("FilmeConnection")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
